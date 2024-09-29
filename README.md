@@ -1,6 +1,6 @@
-# library
+# Library
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a test library application that able to add update.
 
 ## Recommended IDE Setup
 
