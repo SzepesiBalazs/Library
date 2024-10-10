@@ -1,14 +1,34 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from "vue-router";
+import userData from './books.json';
+
+export default {
+  data() {
+    return {
+      books: userData.books
+    };
+  }
+};
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+    <img
+      alt="Vue logo"
+      class="logo"
+      src="@/assets/logo.svg"
+      width="125"
+      height="125"
+    />
+    <div id="app"></div>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <div>
+        <ul>
+          <li v-for="book in books" :key="book.id"
+          {{ book.title }} - {{ book.id }} - {{ book.author }} - {{ book.year }}
+          </li>
+        </ul>
+      </div>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
