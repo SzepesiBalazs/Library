@@ -1,14 +1,4 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import userData from './books.json';
-
-export default {
-  data() {
-    return {
-      books: userData.books
-    };
-  }
-};
 </script>
 
 <template>
