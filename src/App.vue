@@ -7,11 +7,13 @@ export default {
     const newBook = ref({
       title: "",
       author: "",
+      year: "",
     });
     const addBook = () => {
       libraryData.value.books.push({ ...newBook.value });
       newBook.value.title = "";
       newBook.value.author = "";
+      newBook.value.year = "";
     };
     return {
       libraryData,
@@ -42,6 +44,7 @@ export default {
         </ul>
         <input v-model="newBook.title" />
         <input v-model="newBook.author" />
+        <VueDatePicker v-model="newBook.year" year-picker />
         <button type="submit" @click="addBook">Save</button>
       </div>
 
