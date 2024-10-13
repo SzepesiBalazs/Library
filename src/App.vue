@@ -3,9 +3,18 @@ import { ref, computed, onMounted } from "vue";
 import userData from "./assets/libraryData.json";
 export default {
   setup() {
-    const libraryData = computed(() => userData);
+    const libraryData = ref(userData);
+    const newBook = ref({
+      title: "",
+      author: "",
+    });
+    const addBook = () => {
+      libraryData.value.books.push(newBook.value);
+    };
     return {
       libraryData,
+      addBook,
+      newBook,
     };
   },
 };
@@ -23,7 +32,15 @@ export default {
     <div id="app"></div>
     <div class="wrapper">
       <div>
-        <ul></ul>
+        <ul>
+          <li v-for="book in libraryData.books" :key="book.id">
+            <p>{{ book.title }}</p>
+            <span>{{ book.author }}</span>
+          </li>
+        </ul>
+        <input v-model="newBook.title" />
+        <input v-model="newBook.author" />
+        <button type="submit" @click="addBook">Save</button>
       </div>
 
       <nav>
