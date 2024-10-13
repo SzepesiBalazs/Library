@@ -9,7 +9,9 @@ export default {
       author: "",
     });
     const addBook = () => {
-      libraryData.value.books.push(newBook.value);
+      libraryData.value.books.push({ ...newBook.value });
+      newBook.value.title = "";
+      newBook.value.author = "";
     };
     return {
       libraryData,
