@@ -1,4 +1,14 @@
-<script setup lang="ts">
+<script>
+import { ref, computed, onMounted } from "vue";
+import userData from "./assets/libraryData.json";
+export default {
+  setup() {
+    const libraryData = computed(() => userData);
+    return {
+      libraryData,
+    };
+  },
+};
 </script>
 
 <template>
@@ -13,15 +23,11 @@
     <div id="app"></div>
     <div class="wrapper">
       <div>
-        <ul>
-          <li v-for="book in books" :key="book.id"
-          {{ book.title }} - {{ book.id }} - {{ book.author }} - {{ book.year }}
-          </li>
-        </ul>
+        <ul></ul>
       </div>
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/">Books</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
