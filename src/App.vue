@@ -1,5 +1,6 @@
 <script>
-import { ref, computed, onMounted } from "vue";
+import { ref } from "vue";
+import Books from "./components/Books.vue";
 import userData from "./assets/libraryData.json";
 export default {
   setup() {
@@ -78,7 +79,7 @@ export default {
       </nav>
     </div>
   </header>
-
+  <books />
   <RouterView />
 </template>
 
