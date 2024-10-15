@@ -1,7 +1,8 @@
 <script>
 import { ref } from "vue";
-import Books from "./components/Books.vue";
 import userData from "./assets/libraryData.json";
+import Books from "./components/Books.vue";
+import Books from "./components/Books.vue";
 export default {
   setup() {
     const libraryData = ref(userData);
@@ -35,9 +36,20 @@ export default {
     };
   },
 };
+
+function deleteBooks(title) {
+  libraryData.value.books.splice(title, 1);
+}
 </script>
 
 <template>
+  <Books
+    v-for="(item, index) in Books"
+    :title="item[0].title"
+    :author="item[0].author"
+    :year="item[0].year"
+    v-on:deleteBook="deleteBooks"
+  />
   <header>
     <img
       alt="Vue logo"
@@ -79,7 +91,7 @@ export default {
       </nav>
     </div>
   </header>
-  <books />
+
   <RouterView />
 </template>
 
