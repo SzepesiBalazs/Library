@@ -1,7 +1,11 @@
 <script>
 import { ref } from "vue";
 import userData from "../assets/libraryData.json";
+import Book from "./Book.vue";
 export default {
+  components: {
+    Book,
+  },
   setup() {
     const libraryData = ref(userData);
     const searchParameter = ref(null);
@@ -22,6 +26,7 @@ export default {
       newBook.value.title = "";
       newBook.value.author = "";
       newBook.value.year = "";
+      //newBook = new Book()
     };
     function deleteBooks(title) {
       libraryData.value.books.splice(title, 1);
@@ -33,6 +38,7 @@ export default {
       searchParameter,
       searchBook,
       filteredLibraryData,
+      deleteBooks,
     };
   },
 };
@@ -45,16 +51,14 @@ export default {
     <div v-if="filteredLibraryData.length > 0">
       <ul>
         <li v-for="book in filteredLibraryData" :key="book.id">
-          <p>{{ book.title }}</p>
-          <span>{{ book.author }}</span>
+          <Book :data="book" />
         </li>
       </ul>
     </div>
     <div v-else>
       <ul>
         <li v-for="book in libraryData.books" :key="book.id">
-          <p>{{ book.title }}</p>
-          <span>{{ book.author }}</span>
+          <Book :data="book" />
         </li>
       </ul>
       <input v-model="newBook.title" />
