@@ -1,7 +1,7 @@
 {
   "books": [
-    { "title": "CVersion", "id": 1, "author": "Szepesi Sanyi", "year": 2014 },
-    { "title": "BVersion", "id": 2, "author": "John Doe", "year": 2015 },
-    { "title": "AVersion", "id": 3, "author": "Doe John", "year": 2016 }
+    { "title": "CVersion", "id": 1, "author": "Szepesi Sanyi ", "year": 2014 },
+    { "title": "BVersion", "id": 2, "author": "John Doe ", "year": 2015 },
+    { "title": "AVersion", "id": 3, "author": "Doe John ", "year": 2016 }
   ]
 }

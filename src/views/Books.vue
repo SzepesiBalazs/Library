@@ -7,6 +7,7 @@ export default {
     Book,
   },
   setup() {
+    const bookIndex = ref(null);
     const libraryData = ref(userData);
     const searchParameter = ref(null);
     const filteredLibraryData = ref([]);
@@ -29,12 +30,19 @@ export default {
       //newBook = new Book()
     };
     function deleteBooks(title) {
-      const bookIndex = libraryData.value.books.findIndex(
+      bookIndex.value = libraryData.value.books.findIndex(
         (book) => book.title === title
       );
-      if (bookIndex !== -1) {
+      if (bookIndex.value !== -1) {
         libraryData.value.books.splice(bookIndex, 1);
       }
+    }
+    function editBooks(oldTitle, newTitle) {
+      bookIndex.value = libraryData.value.books.findIndex(
+        (book) => book.title === oldTitle
+      );
+      if (bookIndex.value !== -1 && newTitle)
+        libraryData.value.books[bookIndex].title = newTitle;
     }
     return {
       libraryData,
@@ -44,6 +52,8 @@ export default {
       searchBook,
       filteredLibraryData,
       deleteBooks,
+      editBooks,
+      bookIndex,
     };
   },
 };
@@ -51,6 +61,10 @@ export default {
 
 <template>
   <div>
+    <div>
+      <input v-model="newTitle" placeholder="Enter book title to edit" />
+      <button @click="editBooks(bookTitle, newTitle)">Edit Book</button>
+    </div>
     <div>
       <input v-model="bookTitle" placeholder="Enter book title to delete" />
       <button @click="deleteBooks(bookTitle)">Delete Book</button>
