@@ -23,5 +23,6 @@ export default {
   <div>
     <p>{{ title }}</p>
     <span>{{ data.author }}</span>
+    <span>{{ data.year }}</span>
   </div>
 </template>

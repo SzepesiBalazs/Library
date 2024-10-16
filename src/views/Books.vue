@@ -29,7 +29,12 @@ export default {
       //newBook = new Book()
     };
     function deleteBooks(title) {
-      libraryData.value.books.splice(title, 1);
+      const bookIndex = libraryData.value.books.findIndex(
+        (book) => book.title === title
+      );
+      if (bookIndex !== -1) {
+        libraryData.value.books.splice(bookIndex, 1);
+      }
     }
     return {
       libraryData,
@@ -46,7 +51,11 @@ export default {
 
 <template>
   <div>
-    <input v-model="searchParameter" />
+    <div>
+      <input v-model="bookTitle" placeholder="Enter book title to delete" />
+      <button @click="deleteBooks(bookTitle)">Delete Book</button>
+    </div>
+    <input v-model="searchParameter" placeholder="Enter book title to search" />
     <button type="submit" @click="searchBook">Search</button>
     <div v-if="filteredLibraryData.length > 0">
       <ul>
@@ -61,9 +70,16 @@ export default {
           <Book :data="book" />
         </li>
       </ul>
-      <input v-model="newBook.title" />
-      <input v-model="newBook.author" />
-      <VueDatePicker v-model="newBook.year" year-picker />
+      <input v-model="newBook.title" placeholder="Enter the new books title" />
+      <input
+        v-model="newBook.author"
+        placeholder="Enter the new books author"
+      />
+      <VueDatePicker
+        v-model="newBook.year"
+        placeholder="Add year"
+        year-picker
+      />
       <button type="submit" @click="addBook">Save</button>
     </div>
   </div>
