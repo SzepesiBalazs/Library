@@ -57,8 +57,24 @@ export default {
 <template>
   <div>
     <div>
-      <input v-model="newTitle" placeholder="Enter book title to edit" />
-      <button @click="editBooks(bookTitle, newTitle)">Edit Book</button>
+      <div class="input-group mb-3">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="button-addon1"
+          @click="editBooks(bookTitle, newTitle)"
+        >
+          Edit Book
+        </button>
+        <input
+          type="text"
+          class="form-control"
+          placeholder=""
+          aria-label="Enter book title to edit"
+          aria-describedby="button-addon1"
+          v-model="newTitle"
+        />
+      </div>
     </div>
     <input v-model="searchParameter" placeholder="Enter book title to search" />
     <button type="submit" @click="searchBook">Search</button>

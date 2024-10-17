@@ -24,7 +24,13 @@ export default {
 
 <template>
   <div>
-    <button @click="deleteBookCustomFunction">X</button>
+    <button
+      @click="deleteBookCustomFunction"
+      type="button"
+      class="btn btn-primary"
+    >
+      X
+    </button>
     <p>{{ title }}</p>
     <span>{{ data.author }}</span>
     <span>{{ data.year }}</span>
