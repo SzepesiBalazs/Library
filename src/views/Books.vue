@@ -1,59 +1,54 @@
 <script>
 import { ref } from "vue";
 import userData from "../assets/libraryData.json";
-import Book from "./Book.vue";
+import BookComponent from "./Book.vue";
+import Book from "./components/book.js";
 export default {
   components: {
-    Book,
+    BookComponent,
   },
   setup() {
-    const bookIndex = ref(null);
     const libraryData = ref(userData);
     const searchParameter = ref(null);
     const filteredLibraryData = ref([]);
-    const newBook = ref({
-      title: "",
-      author: "",
-      year: "",
-    });
-
+    const localBook = ref(new Book());
     const searchBook = () => {
       filteredLibraryData.value = libraryData.value.books.filter(
         (book) => book.title === searchParameter.value
       );
     };
     const addBook = () => {
-      libraryData.value.books.push({ ...newBook.value });
-      newBook.value.title = "";
-      newBook.value.author = "";
-      newBook.value.year = "";
-      //newBook = new Book()
+      let maxId = Math.max(...libraryData.value.books.map((book) => book.id));
+      localBook.value.id = maxId + 1;
+      //console.log("maxId ", maxId);
+      libraryData.value.books.push({ ...localBook.value });
+      localBook.value = new Book();
     };
-    function deleteBooks(title) {
-      bookIndex.value = libraryData.value.books.findIndex(
-        (book) => book.title === title
+    function deleteBookInParent(id) {
+      console.log("id from child", id);
+      const bookIndex = libraryData.value.books.findIndex(
+        (book) => book.id === id
       );
-      if (bookIndex.value !== -1) {
+      if (bookIndex !== -1) {
         libraryData.value.books.splice(bookIndex, 1);
       }
     }
     function editBooks(oldTitle, newTitle) {
-      bookIndex.value = libraryData.value.books.findIndex(
+      const bookIndex = libraryData.value.books.findIndex(
         (book) => book.title === oldTitle
       );
-      if (bookIndex.value !== -1 && newTitle)
+      if (bookIndex !== -1 && newTitle)
         libraryData.value.books[bookIndex].title = newTitle;
     }
     return {
       libraryData,
       addBook,
-      newBook,
+      localBook,
       searchParameter,
       searchBook,
       filteredLibraryData,
-      deleteBooks,
+      deleteBookInParent,
       editBooks,
-      bookIndex,
     };
   },
 };
@@ -65,32 +60,37 @@ export default {
       <input v-model="newTitle" placeholder="Enter book title to edit" />
       <button @click="editBooks(bookTitle, newTitle)">Edit Book</button>
     </div>
-    <div>
-      <input v-model="bookTitle" placeholder="Enter book title to delete" />
-      <button @click="deleteBooks(bookTitle)">Delete Book</button>
-    </div>
     <input v-model="searchParameter" placeholder="Enter book title to search" />
     <button type="submit" @click="searchBook">Search</button>
     <div v-if="filteredLibraryData.length > 0">
       <ul>
         <li v-for="book in filteredLibraryData" :key="book.id">
-          <Book :data="book" />
+          <BookComponent
+            :data="book"
+            @deleteBookCustomEvent="deleteBookInParent"
+          />
         </li>
       </ul>
     </div>
     <div v-else>
       <ul>
         <li v-for="book in libraryData.books" :key="book.id">
-          <Book :data="book" />
+          <BookComponent
+            :data="book"
+            @deleteBookCustomEvent="deleteBookInParent"
+          />
         </li>
       </ul>
-      <input v-model="newBook.title" placeholder="Enter the new books title" />
       <input
-        v-model="newBook.author"
+        v-model="localBook.title"
+        placeholder="Enter the new books title"
+      />
+      <input
+        v-model="localBook.author"
         placeholder="Enter the new books author"
       />
       <VueDatePicker
-        v-model="newBook.year"
+        v-model="localBook.year"
         placeholder="Add year"
         year-picker
       />
