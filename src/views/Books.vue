@@ -33,12 +33,12 @@ export default {
         libraryData.value.books.splice(bookIndex, 1);
       }
     }
-    function editBooks(oldTitle, newTitle) {
+    function editBookInParent(emitedDataFromChild) {
+      //console.log("test", emitedDataFromChild.newBookData.title);
       const bookIndex = libraryData.value.books.findIndex(
-        (book) => book.title === oldTitle
+        (book) => book.id === emitedDataFromChild.newBookData.id
       );
-      if (bookIndex !== -1 && newTitle)
-        libraryData.value.books[bookIndex].title = newTitle;
+      libraryData.value.books[bookIndex] = emitedDataFromChild.newBookData;
     }
     return {
       libraryData,
@@ -48,7 +48,7 @@ export default {
       searchBook,
       filteredLibraryData,
       deleteBookInParent,
-      editBooks,
+      editBookInParent,
     };
   },
 };
@@ -56,26 +56,6 @@ export default {
 
 <template>
   <div>
-    <div>
-      <div class="input-group mb-3">
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          id="button-addon1"
-          @click="editBooks(bookTitle, newTitle)"
-        >
-          Edit Book
-        </button>
-        <input
-          type="text"
-          class="form-control"
-          placeholder=""
-          aria-label="Enter book title to edit"
-          aria-describedby="button-addon1"
-          v-model="newTitle"
-        />
-      </div>
-    </div>
     <input v-model="searchParameter" placeholder="Enter book title to search" />
     <button type="submit" @click="searchBook">Search</button>
     <div v-if="filteredLibraryData.length > 0">
@@ -94,6 +74,7 @@ export default {
           <BookComponent
             :data="book"
             @deleteBookCustomEvent="deleteBookInParent"
+            @editBookCustomEvent="editBookInParent"
           />
         </li>
       </ul>
