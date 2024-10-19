@@ -1,19 +1,15 @@
 <script>
-import { ref } from "vue";
 import Book from "./components/book.js";
 export default {
   props: {
-    id: {
-      type: Number,
-      required: true,
-    },
-    data: {
+    bookHandlerData: {
       type: Object,
       default: () => ({}),
     },
   },
   setup(props, { emit }) {
-    const localBook = new Book();
+    const existingBook = props.bookHandlerData;
+    const localBook = existingBook?.id > 0 ? existingBook : new Book();
     const handleSubmit = () => {
       emit("createOrEditBook", localBook);
     };

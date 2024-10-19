@@ -1,7 +1,10 @@
 <script>
 import { ref } from "vue";
-import Book from "./components/book.js";
+import BookHandler from "./BookHandler.vue";
 export default {
+  components: {
+    BookHandler,
+  },
   props: {
     data: {
       type: Object,
@@ -11,19 +14,13 @@ export default {
 
   setup(props, { emit }) {
     const showEditForm = ref(false);
-    const bookToEdit = new Book(
-      props.data.title,
-      props.data.author,
-      props.data.year,
-      props.data.id
-    );
     const deleteBookCustomFunction = () => {
       emit("deleteBookCustomEvent", props.data.id);
     };
     const openEditFormFunction = () => {
       showEditForm.value = true;
     };
-    const editBookCustomFunction = () => {
+    const editBookCustomFunction = (bookToEdit) => {
       emit("editBookCustomEvent", {
         newBookData: bookToEdit,
         test: "successful",
@@ -32,7 +29,6 @@ export default {
     };
     return {
       showEditForm,
-      bookToEdit,
       editBookCustomFunction,
       openEditFormFunction,
       deleteBookCustomFunction,
@@ -54,31 +50,10 @@ export default {
       Edit
     </button>
     <div v-if="showEditForm">
-      <input
-        type="text"
-        class="form-control"
-        placeholder=""
-        v-model="bookToEdit.title"
+      <BookHandler
+        :bookHandlerData="data"
+        @createOrEditBook="editBookCustomFunction"
       />
-      <input
-        type="text"
-        class="form-control"
-        placeholder=""
-        v-model="bookToEdit.author"
-      />
-      <input
-        type="text"
-        class="form-control"
-        placeholder=""
-        v-model="bookToEdit.year"
-      />
-      <button
-        class="btn btn-primary"
-        type="submit"
-        @click="editBookCustomFunction"
-      >
-        Save edit
-      </button>
     </div>
     <div v-else>
       <p>{{ data.title }}</p>
