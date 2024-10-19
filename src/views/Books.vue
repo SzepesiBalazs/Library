@@ -3,26 +3,27 @@ import { ref } from "vue";
 import userData from "../assets/libraryData.json";
 import BookComponent from "./Book.vue";
 import Book from "./components/book.js";
+import BookHandler from "./BookHandler.vue";
 export default {
   components: {
     BookComponent,
+    BookHandler,
   },
   setup() {
     const libraryData = ref(userData);
     const searchParameter = ref(null);
     const filteredLibraryData = ref([]);
-    const localBook = ref(new Book());
     const searchBook = () => {
       filteredLibraryData.value = libraryData.value.books.filter(
         (book) => book.title === searchParameter.value
       );
     };
-    const addBook = () => {
+    const addBook = (localBook) => {
+      console.log("test", localBook);
       let maxId = Math.max(...libraryData.value.books.map((book) => book.id));
-      localBook.value.id = maxId + 1;
-      //console.log("maxId ", maxId);
-      libraryData.value.books.push({ ...localBook.value });
-      localBook.value = new Book();
+      localBook.id = maxId + 1;
+      libraryData.value.books.push({ ...localBook });
+      localBook = new Book();
     };
     function deleteBookInParent(id) {
       console.log("id from child", id);
@@ -43,7 +44,6 @@ export default {
     return {
       libraryData,
       addBook,
-      localBook,
       searchParameter,
       searchBook,
       filteredLibraryData,
@@ -78,38 +78,7 @@ export default {
           />
         </li>
       </ul>
-      <div class="input-group input-group-sm mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-sm"
-          >New book title:</span
-        >
-        <input
-          type="text"
-          class="form-control"
-          aria-label="Sizing example input"
-          aria-describedby="inputGroup-sizing-sm"
-          v-model="localBook.title"
-        />
-      </div>
-      <div class="input-group input-group-sm mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-sm"
-          >New book author:</span
-        >
-        <input
-          type="text"
-          class="form-control"
-          aria-label="Sizing example input"
-          aria-describedby="inputGroup-sizing-sm"
-          v-model="localBook.author"
-        />
-      </div>
-      <VueDatePicker
-        v-model="localBook.year"
-        placeholder="Add year"
-        year-picker
-      />
-      <button class="btn btn-primary" type="submit" @click="addBook">
-        Save
-      </button>
     </div>
+    <BookHandler @createOrEditBook="addBook" />
   </div>
 </template>

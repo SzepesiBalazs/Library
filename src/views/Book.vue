@@ -10,7 +10,6 @@ export default {
   },
 
   setup(props, { emit }) {
-    const title = props.data.title.toUpperCase();
     const showEditForm = ref(false);
     const bookToEdit = new Book(
       props.data.title,
@@ -32,7 +31,6 @@ export default {
       showEditForm.value = false;
     };
     return {
-      title,
       showEditForm,
       bookToEdit,
       editBookCustomFunction,
