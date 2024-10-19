@@ -62,6 +62,18 @@ export default {
         placeholder=""
         v-model="bookToEdit.title"
       />
+      <input
+        type="text"
+        class="form-control"
+        placeholder=""
+        v-model="bookToEdit.author"
+      />
+      <input
+        type="text"
+        class="form-control"
+        placeholder=""
+        v-model="bookToEdit.year"
+      />
       <button
         class="btn btn-primary"
         type="submit"
@@ -71,7 +83,7 @@ export default {
       </button>
     </div>
     <div v-else>
-      <p>{{ title }}</p>
+      <p>{{ data.title }}</p>
       <span>{{ data.author }}</span>
       <span>{{ data.year }}</span>
     </div>

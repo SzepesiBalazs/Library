@@ -8,15 +8,5 @@ export default {
       default: () => ({}),
     },
   },
-
-  setup(props, { emit }) {
-    const editBookCustomFunction = () => {
-      emit("editBookCustomEvent", props.data.id);
-    };
-    return {
-      title,
-      editBookCustomFunction,
-    };
-  },
 };
 </script>
