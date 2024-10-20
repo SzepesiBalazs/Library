@@ -1,6 +1,12 @@
 <script>
 import Book from "./components/book.js";
+import { Form, Field, ErrorMessage } from "vee-validate";
 export default {
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
   props: {
     bookHandlerData: {
       type: Object,
@@ -13,30 +19,47 @@ export default {
     const handleSubmit = () => {
       emit("createOrEditBook", localBook);
     };
-    return { localBook, handleSubmit };
+    const validateTitle = (value) => {
+      console.log("test", value);
+      if (!value) {
+        return "This field is required";
+      }
+      return true;
+    };
+    return { localBook, handleSubmit, validateTitle };
   },
 };
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit">
+  <Form @submit="handleSubmit">
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="inputGroup-sizing-sm"
         >New book title:</span
       >
-      <input
+      <Field
+        name="title"
         type="text"
         class="form-control"
         aria-label="Sizing example input"
         aria-describedby="inputGroup-sizing-sm"
         v-model="localBook.title"
+        rules="required"
       />
+      <ErrorMessage name="title">
+        <template #default="{ message }">
+          <div class="bg-danger text-white p-2 mt-1 rounded">
+            {{ message }}
+          </div>
+        </template>
+      </ErrorMessage>
     </div>
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="inputGroup-sizing-sm"
         >New book author:</span
       >
-      <input
+      <Field
+        name="author"
         type="text"
         class="form-control"
         aria-label="Sizing example input"
@@ -50,5 +73,5 @@ export default {
       year-picker
     />
     <button class="btn btn-primary" type="submit">Save</button>
-  </form>
+  </Form>
 </template>

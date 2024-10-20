@@ -3,12 +3,13 @@
 <template>
   <header>
     <div id="app"></div>
-    <div class="wrapper">
-      <nav>
+    <b-container class="bv-example-row mb-3">
+      <b-row cols="2">
         <RouterLink to="/"> Books</RouterLink>
         <RouterLink to="/about"> About</RouterLink>
-      </nav>
-    </div>
+      </b-row>
+    </b-container>
+    <div class="wrapper"></div>
   </header>
 
   <RouterView />
