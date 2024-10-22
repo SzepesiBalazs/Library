@@ -1,6 +1,6 @@
 <script>
-import Book from "./components/book.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import Book from "./components/book.js";
 export default {
   components: {
     Form,
@@ -19,14 +19,7 @@ export default {
     const handleSubmit = () => {
       emit("createOrEditBook", localBook);
     };
-    const validateTitle = (value) => {
-      console.log("test", value);
-      if (!value) {
-        return "This field is required";
-      }
-      return true;
-    };
-    return { localBook, handleSubmit, validateTitle };
+    return { localBook, handleSubmit };
   },
 };
 </script>
@@ -44,7 +37,7 @@ export default {
         aria-label="Sizing example input"
         aria-describedby="inputGroup-sizing-sm"
         v-model="localBook.title"
-        rules="required"
+        rules="required|minMax:3,20"
       />
       <ErrorMessage name="title">
         <template #default="{ message }">
@@ -65,13 +58,30 @@ export default {
         aria-label="Sizing example input"
         aria-describedby="inputGroup-sizing-sm"
         v-model="localBook.author"
+        rules="required|minMax:3,20"
       />
+      <ErrorMessage name="author">
+        <template #default="{ message }">
+          <div class="bg-danger text-white p-2 mt-1 rounded">
+            {{ message }}
+          </div>
+        </template>
+      </ErrorMessage>
     </div>
     <VueDatePicker
+      name="year"
       v-model="localBook.year"
       placeholder="Add year"
       year-picker
+      rules="required"
     />
+    <ErrorMessage name="year">
+      <template #default="{ message }">
+        <div class="bg-danger text-white p-2 mt-1 rounded">
+          {{ message }}
+        </div>
+      </template>
+    </ErrorMessage>
     <button class="btn btn-primary" type="submit">Save</button>
   </Form>
 </template>

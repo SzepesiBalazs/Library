@@ -2,14 +2,15 @@
 
 <template>
   <header>
-    <div id="app"></div>
-    <b-container class="bv-example-row mb-3">
-      <b-row cols="2">
-        <RouterLink to="/"> Books</RouterLink>
-        <RouterLink to="/about"> About</RouterLink>
-      </b-row>
-    </b-container>
-    <div class="wrapper"></div>
+    <div id="app">
+      <b-container class="bv-example-row mb-3">
+        <b-row cols="2">
+          <RouterLink to="/"> Books</RouterLink>
+          <RouterLink to="/about"> About</RouterLink>
+        </b-row>
+      </b-container>
+      <div class="wrapper"></div>
+    </div>
   </header>
 
   <RouterView />
