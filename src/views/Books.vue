@@ -35,7 +35,6 @@ export default {
       }
     }
     function editBookInParent(emitedDataFromChild) {
-      //console.log("test", emitedDataFromChild.newBookData.title);
       const bookIndex = libraryData.value.books.findIndex(
         (book) => book.id === emitedDataFromChild.newBookData.id
       );
