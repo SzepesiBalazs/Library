@@ -42,11 +42,15 @@ export default {
     <button
       @click="deleteBookCustomFunction"
       type="button"
-      class="btn btn-primary"
+      class="btn btn-danger"
     >
       X
     </button>
-    <button @click="openEditFormFunction" type="button" class="btn btn-warning">
+    <button
+      @click="openEditFormFunction"
+      type="button"
+      class="btn btn-info border-dark"
+    >
       Edit
     </button>
     <div v-if="showEditForm">

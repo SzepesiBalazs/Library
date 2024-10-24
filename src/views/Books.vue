@@ -56,8 +56,25 @@ export default {
 
 <template>
   <div>
-    <input v-model="searchParameter" placeholder="Enter book title to search" />
-    <button type="submit" @click="searchBook">Search</button>
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control border-secondary"
+        placeholder="Enter book title to search"
+        aria-label="Enter book title to search"
+        aria-describedby="button-addon2"
+        style="background-color: lightgray"
+        v-model="searchParameter"
+      />
+      <button
+        class="btn btn-secondary border-dark"
+        type="submit"
+        id="button-addon2"
+        @click="searchBook"
+      >
+        Search
+      </button>
+    </div>
     <div v-if="filteredLibraryData.length > 0">
       <ul>
         <li v-for="book in filteredLibraryData" :key="book.id">
