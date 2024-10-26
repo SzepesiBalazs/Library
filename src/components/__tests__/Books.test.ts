@@ -65,4 +65,35 @@ describe("Books", () => {
 
     expect(updatedBook.title).toEqual(newBook.title);
   });
+  it("should find a book by exact title", () => {
+    const wrapper = mount(Books);
+
+    wrapper.vm.searchParameter = "searchableTitle";
+    wrapper.vm.addBook(new Book("searchableTitle"));
+    wrapper.vm.searchBook();
+
+    const matchingBook = wrapper.vm.filteredLibraryData;
+    expect(matchingBook.length).toEqual(1);
+  });
+  it("should not find any book if title doesn't exist in books", () => {
+    const wrapper = mount(Books);
+
+    wrapper.vm.searchParameter = "notExistingBookTitle";
+    wrapper.vm.addBook(new Book("anotherSearchableTitle"));
+    wrapper.vm.searchBook();
+
+    const matchingBook = wrapper.vm.filteredLibraryData;
+    expect(matchingBook.length).toEqual(0);
+  });
+  it("should find exactly 2 matching book", () => {
+    const wrapper = mount(Books);
+
+    wrapper.vm.searchParameter = "thirdSearchableBook";
+    wrapper.vm.addBook(new Book("thirdSearchableBook"));
+    wrapper.vm.addBook(new Book("thirdSearchableBook"));
+    wrapper.vm.searchBook();
+
+    const matchingBook = wrapper.vm.filteredLibraryData;
+    expect(matchingBook.length).toEqual(2);
+  });
 });
